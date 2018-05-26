@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold
-
+import numpy as np
 def count_vector_model(list_of_docs):
     count_vect = CountVectorizer()
     train_counts = count_vect.fit_transform(list_of_docs)
@@ -45,7 +45,21 @@ def preprocess_docs(file_input_dir,train_validation_set):
     return a,class_list
 
 def Logist_Reg_K_Fold(data,class_list):
-    
+    seed = 7
+    kfold = StratifiedKFold(n_splits=5
+                            , shuffle=True, random_state=seed)
+    for train, validation in kfold.split(data, class_list):
+        train_data=data[train]
+        train_class=class_list[train]
+
+        validation_data=data[validation]
+        validation_class=class_list[validation]
+
+        logisticRegr = LogisticRegression()
+        logisticRegr.fit(train_data.toarray().astype(int), train_class)
+        x_test = logisticRegr.predict(validation_data.toarray().astype(int))
+
+        print(accuracy_score(validation_class, x_test))
 
 if __name__ == "__main__":
     class_list=[]
@@ -53,12 +67,7 @@ if __name__ == "__main__":
     train_validation_set=pickle.load(open('train_validation_sets.txt', 'rb'))
     count_vec,class_list=preprocess_docs('raw_input',train_validation_set)
     count_vec=count_vector_model(count_vec)
+    Logist_Reg_K_Fold(count_vec, np.array(class_list))
 
-X_train, X_test, y_train, y_test = train_test_split(count_vec,class_list, test_size=0.33, random_state=42)
-logisticRegr = LogisticRegression()
-logisticRegr.fit(X_train.toarray().astype(int), y_train)
-x_test=logisticRegr.predict(X_test.toarray().astype(int))
-
-accuracy_score(y_test, x_test)
 
 
