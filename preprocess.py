@@ -1,5 +1,6 @@
 from sklearn.model_selection import train_test_split
 import glob
+import pickle
 '''
 This function creates train and validation sets to build model.
 Also test set to test the model.
@@ -19,7 +20,15 @@ def create_train_validation_test_sets(input_dir):
             class_label.append(0)
     '''spliting the data into train and test sets'''
     X_train, X_test, y_train, y_test = train_test_split(txtfiles, class_label, test_size = 0.1, random_state = 42)
-    
+    ''' saving the training and validation sets'''
+    with open("train_validation_sets.txt", 'wb') as f:
+        pickle.dump(X_train, f)
+    ''' Saving the test set'''
+    with open("test_set.txt", 'wb') as f:
+        pickle.dump(X_train, f)
+
+
+
 
 if __name__ == "__main__":
     create_train_validation_test_sets("raw_input/")
