@@ -25,7 +25,8 @@ def tf_idf_model(list_of_docs):
 
 
 def preprocess_docs(file_input_dir,train_validation_set):
-
+    data=[]
+    class_list=[]
     for filename in glob.glob(file_input_dir+'/*.txt'):
         if(filename in train_validation_set):
             file=open(filename ,encoding="utf8", errors='ignore')
@@ -33,7 +34,7 @@ def preprocess_docs(file_input_dir,train_validation_set):
             str1=""
             for each in filelines:
                 str1=str1+each
-            a.append(str1)
+            data.append(str1)
             if(filename.__contains__('ham')):
                 temp=[]
                 temp.append(1)
@@ -42,7 +43,7 @@ def preprocess_docs(file_input_dir,train_validation_set):
                 temp = []
                 temp.append(0)
                 class_list.append(temp)
-    return a,class_list
+    return data,class_list
 
 def Logist_Reg_K_Fold(data,class_list):
     seed = 7
