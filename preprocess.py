@@ -25,7 +25,7 @@ def create_train_validation_test_sets(input_dir):
         pickle.dump(X_train, f)
     ''' Saving the test set'''
     with open("test_set.txt", 'wb') as f:
-        pickle.dump(X_train, f)
+        pickle.dump(X_test, f)
 
 
 
