@@ -48,6 +48,7 @@ def Logist_Reg_K_Fold(data,class_list):
     seed = 7
     kfold = StratifiedKFold(n_splits=5
                             , shuffle=True, random_state=seed)
+    base_acc=0
     for train, validation in kfold.split(data, class_list):
         train_data=data[train]
         train_class=class_list[train]
@@ -58,7 +59,10 @@ def Logist_Reg_K_Fold(data,class_list):
         logisticRegr = LogisticRegression()
         logisticRegr.fit(train_data.toarray().astype(int), train_class)
         x_test = logisticRegr.predict(validation_data.toarray().astype(int))
-
+        validation_acc=accuracy_score(validation_class, x_test)
+        if(base_acc<validation_acc):
+            filename = 'logistic_best_model.sav'
+            pickle.dump(logisticRegr, open('best_models/' + filename, 'wb'))
         print(accuracy_score(validation_class, x_test))
 
 if __name__ == "__main__":
