@@ -7,6 +7,8 @@ from sklearn.metrics import accuracy_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold
 import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+
 def count_vector_model(list_of_docs):
     count_vect = CountVectorizer()
     train_counts = count_vect.fit_transform(list_of_docs)
@@ -66,13 +68,34 @@ def Logist_Reg_K_Fold(data,class_list):
             pickle.dump(logisticRegr, open('best_models/' + filename, 'wb'))
         print(accuracy_score(validation_class, x_test))
 
+def Random_Forest_K_Fold(data,class_list):
+    seed = 7
+    kfold = StratifiedKFold(n_splits=5
+                            , shuffle=True, random_state=seed)
+    base_acc = 0
+    for train, validation in kfold.split(data, class_list):
+        train_data = data[train]
+        train_class = class_list[train]
+
+        validation_data = data[validation]
+        validation_class = class_list[validation]
+        print(train_data)
+        clf = RandomForestClassifier(n_estimators=70)
+        clf.fit(train_data,train_class)
+        x_test = clf.predict(validation_data)
+        validation_acc = accuracy_score(validation_class, x_test)
+        if (base_acc < validation_acc):
+            filename = 'random_forest_best_model.sav'
+            pickle.dump(clf, open('best_models/' + filename, 'wb'))
+        print(accuracy_score(validation_class, x_test))
+
 if __name__ == "__main__":
     class_list=[]
     a=[]
     train_validation_set=pickle.load(open('train_validation_sets.txt', 'rb'))
     count_vec,class_list=preprocess_docs('raw_input',train_validation_set)
     count_vec=count_vector_model(count_vec)
-    Logist_Reg_K_Fold(count_vec, np.array(class_list))
-
+    #Logist_Reg_K_Fold(count_vec, np.array(class_list))
+    #Random_Forest_K_Fold(count_vec.toarray().astype(int), np.array(class_list))
 
 
