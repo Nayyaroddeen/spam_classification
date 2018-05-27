@@ -7,7 +7,7 @@ spam classification. Also the best models of 5-fold cross validation are also in
 ## Dataset Preparation
 The dataset is downloaded from this (http://nlp.cs.aueb.gr/software_and_datasets/Enron-Spam/index.html) location. In particular
 Enron1 (http://nlp.cs.aueb.gr/software_and_datasets/Enron-Spam/preprocessed/enron1.tar.gz) from the Enron-Spam in pre-processed form.
-While preparing the dataset I've selected  10% of the data as test set randomly and remaining 90% of the for the training and validation sets.
+While preparing the dataset I've selected  10% of the data as test set randomly and remaining 90% of the data  for the training and validation sets.
 
 ## Training and Validation file names are included in following file
     1.train_validation_sets.txt
@@ -37,7 +37,7 @@ with each of these classifiers with different features. In all the experiments I
 ## Experimental Setup
 ### Feature extraction
 Training model is build on the training data. The same model is used on test to create features. This above process is done for Word Count Feature Vector and Tf-Idf. Whereas for the
-graph based feature extraction techniques we builds lists for the important words. Then we create a One-Hot encoding for the each document.
+graph based feature extraction techniques we builds lists for the important words. Then we create a One-Hot encoding for the each document using these important words.
 ### Model Selection
 In each of the experiments five fold cross validation is used. Out of all the 5-fold cross validation we take the model that produced
 highest test accuracy as the best model. The best model is saved and used on the unseen test data to check the performance.
@@ -51,7 +51,7 @@ Whereas all other classifiers could able to reach the accuracy with 90-97 % of a
 
 ## Intresting Observations
     graph coloring  based technique uses only 154 features and kcore based algorithms 198 featues but
-    produces close to 95% accuracy. Time requried to build and test the models is much is much less comparing with
+    produces close to 95% accuracy. Time requried to build and test the models is much less comparing with
     other feature representaion techniques.
 
 # Parameter Tuning
