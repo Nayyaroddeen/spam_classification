@@ -11,6 +11,7 @@ from sklearn.ensemble import RandomForestClassifier
 from keras.layers import Dense, Activation, Flatten, Convolution1D, Dropout, MaxPooling1D
 from keras.models import Sequential
 
+'''builds a word count model for the input data'''
 def count_vector_model(list_of_docs):
     count_vect = CountVectorizer()
     train_counts = count_vect.fit_transform(list_of_docs)
@@ -18,7 +19,7 @@ def count_vector_model(list_of_docs):
     pickle.dump(count_vect, open('best_models/'+filename, 'wb'))
     return train_counts
 
-
+'''builds a tfidf  model for the input data'''
 def tf_idf_model(list_of_docs):
     tfidf_transformer = TfidfVectorizer()
     train_tfidf = tfidf_transformer.fit_transform(list_of_docs)
@@ -27,7 +28,8 @@ def tf_idf_model(list_of_docs):
     return train_tfidf
 
 
-
+''' takes file directory and train and validation files list and return
+as list of strings and the corresponding class label'''
 def preprocess_docs(file_input_dir,train_validation_set):
     data=[]
     class_list=[]
@@ -49,11 +51,15 @@ def preprocess_docs(file_input_dir,train_validation_set):
                 class_list.append(temp)
     return data,class_list
 
+'''This function builds a logistic regression model using 5 fold cross 
+validation and saves the best model of these five folds. '''
 def Logist_Reg_K_Fold(data,class_list):
     seed = 7
+    #intializing the five fold
     kfold = StratifiedKFold(n_splits=5
                             , shuffle=True, random_state=seed)
     base_acc=0
+    #starting of the 5-fold cross validation
     for train, validation in kfold.split(data, class_list):
         train_data=data[train]
         train_class=class_list[train]
@@ -62,8 +68,12 @@ def Logist_Reg_K_Fold(data,class_list):
         validation_class=class_list[validation]
 
         logisticRegr = LogisticRegression()
-        logisticRegr.fit(train_data.toarray().astype(int), train_class)
-        x_test = logisticRegr.predict(validation_data.toarray().astype(int))
+        #logisticRegr.fit(train_data.toarray().astype(int), train_class)
+        logisticRegr.fit(train_data, train_class)
+
+        #x_test = logisticRegr.predict(validation_data.toarray().astype(int))
+        x_test = logisticRegr.predict(validation_data)
+
         validation_acc=accuracy_score(validation_class, x_test)
         if(base_acc<validation_acc):
             filename = 'logistic_best_model.sav'
@@ -71,11 +81,16 @@ def Logist_Reg_K_Fold(data,class_list):
             base_acc=validation_acc
         print(accuracy_score(validation_class, x_test))
 
+'''This function builds a random forest  model using 5 fold cross 
+validation and saves the best model of these five folds. '''
+
 def Random_Forest_K_Fold(data,class_list):
     seed = 7
+    # intializing the five fold
     kfold = StratifiedKFold(n_splits=5
                             , shuffle=True, random_state=seed)
     base_acc = 0
+    #starting of the 5-fold cross validation
     for train, validation in kfold.split(data, class_list):
         train_data = data[train]
         train_class = class_list[train]
@@ -94,22 +109,29 @@ def Random_Forest_K_Fold(data,class_list):
         print(accuracy_score(validation_class, x_test))
 
 
+'''This function builds a nerual network  model using 5 fold cross 
+validation and saves the best model of these five folds. '''
+
 def NN_K_Fold(data,class_list):
     seed = 7
+    # intializing the five fold
     kfold = StratifiedKFold(n_splits=5
                             , shuffle=True, random_state=seed)
     base_acc = 0
+    #starting of the 5-fold cross validation
     for train, validation in kfold.split(data, class_list):
+        #selecting the training data for the fold
         train_data = data[train]
         train_class = class_list[train]
-
+        #selecting the validation data for the fold
         validation_data = data[validation]
         validation_class = class_list[validation]
-
+        #calculating the input dimention for the first layer of NN
         input_dim=len(train_data[1,:])
         hidden_nodes_len=1000
         print(input_dim)
         print(hidden_nodes_len)
+        #building the three layered network
         model = Sequential()
         model.add(Dense(hidden_nodes_len, input_dim=input_dim, activation='relu'))
         model.add(Dense(1, activation='sigmoid'))
@@ -122,6 +144,7 @@ def NN_K_Fold(data,class_list):
 
         predict = model.predict(validation_data)
         predict_out=[]
+        #fixing the threshold .25 as it best for the experiment and predicting validation samples
         for i in range(0,len(validation_data)):
             if(predict[i]>0.25):
                 predict_out.append(1)
@@ -129,6 +152,7 @@ def NN_K_Fold(data,class_list):
                 predict_out.append(0)
 
         validation_acc = accuracy_score(validation_class, predict_out)
+        #saving the best model
         print(validation_acc)
         if (base_acc < validation_acc):
             filename = 'nn_best_model.sav'
@@ -143,14 +167,19 @@ def NN_K_Fold(data,class_list):
         print(accuracy_score(validation_class, predict_out))
 
 
+'''This function builds a convolutional neural network  model using 5 fold cross 
+validation and saves the best model of these five folds. '''
+
 def CNN_K_Fold(data,class_list):
     seed = 7
+    # intializing the five fold
     kfold = StratifiedKFold(n_splits=5
                             , shuffle=True, random_state=seed)
     base_acc = 0
     input_dim = len(data[1, :])
     hidden_nodes_len = 1000
     data = np.expand_dims(data, axis=2)
+    #starting of the 5-fold cross validation
     for train, validation in kfold.split(data, class_list):
         train_data = data[train]
         train_class = class_list[train]
@@ -166,6 +195,7 @@ def CNN_K_Fold(data,class_list):
         model.add(Activation('relu'))
         model.add(MaxPooling1D(pool_size=10, strides=10))
         model.add(Flatten())
+        model.add(Dense(400, input_dim=input_dim, activation='relu'))
         model.add(Dense(1, activation='sigmoid'))
         model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
@@ -202,8 +232,9 @@ if __name__ == "__main__":
     train_validation_set=pickle.load(open('train_validation_sets.txt', 'rb'))
     count_vec,class_list=preprocess_docs('raw_input',train_validation_set)
     count_vec=count_vector_model(count_vec)
+    #count_vec=tf_idf_model(count_vec)
     #Logist_Reg_K_Fold(count_vec, np.array(class_list))
     #Random_Forest_K_Fold(count_vec.toarray().astype(int), np.array(class_list))
-    #NN_K_Fold(count_vec.toarray().astype(int), np.array(class_list))
-    CNN_K_Fold(count_vec.toarray().astype(int), np.array(class_list))
+    NN_K_Fold(count_vec.toarray().astype(int), np.array(class_list))
+    #CNN_K_Fold(count_vec.toarray().astype(int), np.array(class_list))
 
