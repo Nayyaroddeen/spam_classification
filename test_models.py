@@ -20,6 +20,18 @@ def transfrom_kcore(data):
 
     return vec_array
 
+
+def transfrom_coloring(data):
+    vec_array=[]
+    word_list = pickle.load(open('best_models/coloring_features.sav', 'rb'))
+
+    for i in range(0, len(data)):
+        temp_list = create_vector(data[i], word_list)
+        vec_array.append(temp_list)
+    vec_array=np.array(vec_array)
+
+    return vec_array
+
 def test_logist_model(data,class_list):
 
     logist_model=pickle.load(open('best_models/logistic_best_model.sav', 'rb'))
@@ -35,6 +47,15 @@ def test_logist_model_kcore(data,class_list):
     y_out=logist_model.predict(data)
     print(accuracy_score(class_list,y_out))
     print(len(data))
+
+def test_logist_model_coloring(data,class_list):
+
+    logist_model=pickle.load(open('best_models/logistic_best_model_coloring.sav', 'rb'))
+    data=transfrom_coloring(data)
+    y_out=logist_model.predict(data)
+    print(accuracy_score(class_list,y_out))
+    print(len(data))
+
 
 def test_random_forest_kcore(data,class_list):
 
@@ -73,6 +94,28 @@ def test_nn_model(data,class_list):
     validation_acc = accuracy_score(class_list, predict_out)
     print(validation_acc)
 
+def test_nn_model_kcore(data,class_list):
+
+    json_file = open('best_models/nn_model_kcore.json', 'r')
+    loaded_model_json = json_file.read()
+    json_file.close()
+    loaded_model = model_from_json(loaded_model_json)
+    # load weights into new model
+    loaded_model.load_weights("best_models/nn_model_kcore.h5")
+    print("Loaded model from disk")
+    loaded_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+    data=transfrom_kcore(data)
+    predict = loaded_model.predict(data)
+    predict_out = []
+    for i in range(0, len(data)):
+        if (predict[i] > 0.25):
+            predict_out.append(1)
+        else:
+            predict_out.append(0)
+
+    validation_acc = accuracy_score(class_list, predict_out)
+    print(validation_acc)
+
 def test_cnn_model(data,class_list):
     data = np.expand_dims(data, axis=2)
     json_file = open('best_models/cnn_model.json', 'r')
@@ -81,6 +124,28 @@ def test_cnn_model(data,class_list):
     loaded_model = model_from_json(loaded_model_json)
     # load weights into new model
     loaded_model.load_weights("best_models/cnn_model.h5")
+    print("Loaded model from disk")
+    loaded_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+    predict = loaded_model.predict(data)
+    predict_out = []
+    for i in range(0, len(data)):
+        if (predict[i] > 0.25):
+            predict_out.append(1)
+        else:
+            predict_out.append(0)
+
+    validation_acc = accuracy_score(class_list, predict_out)
+    print(validation_acc)
+
+def test_cnn_model_kcore(data,class_list):
+    data=transfrom_kcore(data)
+    data = np.expand_dims(data, axis=2)
+    json_file = open('best_models/cnn_model_core.json', 'r')
+    loaded_model_json = json_file.read()
+    json_file.close()
+    loaded_model = model_from_json(loaded_model_json)
+    # load weights into new model
+    loaded_model.load_weights("best_models/cnn_model_core.h5")
     print("Loaded model from disk")
     loaded_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     predict = loaded_model.predict(data)
@@ -106,3 +171,6 @@ if __name__ == "__main__":
     #test_cnn_model(count_vec.toarray().astype(int), class_list)
     #test_logist_model_kcore(count_vec,class_list)
     #test_random_forest_kcore(count_vec,class_list)
+    #test_nn_model_kcore(count_vec,class_list)
+    #test_cnn_model_kcore(count_vec,class_list)
+    #test_logist_model_coloring(count_vec,class_list)
