@@ -105,7 +105,7 @@ def build_models_using_core(file_input_dir,train_validation_set):
 
 
 ''' building the models using the coloring features once the input is scanned then
- then we pass each document to create the core based features to get the new features
+ then we pass each document to create the coloring based features to get the new features
  then we use this features to build the models'''
 
 def build_models_using_coloring(file_input_dir,train_validation_set):
@@ -145,6 +145,9 @@ if __name__ == "__main__":
         a = []
         #loading the training file names
         train_validation_set = pickle.load(open('train_validation_sets.txt', 'rb'))
+        '''this function is used to create the graph based features'''
         #create_graph('raw_input', train_validation_set)
+        ''' this functions builds all the models using core features'''
         #build_models_using_core('raw_input', train_validation_set)
+        ''' this functions builds all the models using coloring features'''
         #build_models_using_coloring('raw_input', train_validation_set)
