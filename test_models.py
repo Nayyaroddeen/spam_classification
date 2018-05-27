@@ -342,21 +342,26 @@ if __name__ == "__main__":
     a=[]
     test_set_docs=pickle.load(open('test_set.txt', 'rb'))
     count_vec,class_list=preprocess_docs('raw_input',test_set_docs)
+    ''' Algorithms based on word count feature vectors and NN
+    performs better than other models'''
     count_vec=transfrom_word_cound_model(count_vec)
     #test_logist_model(count_vec.toarray().astype(int), class_list)
     #test_random_forest_model(count_vec.toarray().astype(int), class_list)
     test_nn_model(count_vec.toarray().astype(int),class_list)
     #test_cnn_model(count_vec.toarray().astype(int), class_list)
+    ''' Algorithms based on kcore features '''
 
     #test_logist_model_kcore(count_vec,class_list)
     #test_random_forest_kcore(count_vec,class_list)
     #test_nn_model_kcore(count_vec,class_list)
     #test_cnn_model_kcore(count_vec,class_list)
+    ''' Algorithms based on graph coloring features'''
 
     #test_logist_model_coloring(count_vec,class_list)
     #test_random_forest_coloring(count_vec,class_list)
     #test_nn_model_coloring(count_vec,class_list)
     #test_cnn_model_coloring(count_vec,class_list)
+    ''' Algorithms based on tfidf '''
 
     ## Tf-dff transformation
     #tfidf=transfrom_word_tfidf(count_vec)
