@@ -36,21 +36,22 @@ with each of these classifiers with different features. In all the experiments I
 
 ## Experimental Setup
 ### Feature extraction
-Training model is build on the training data. The same model is used on test to create features. This above process is done for Word Count Feature Vector and Tf-Idf. Whereas for the
-graph based feature extraction techniques we builds lists for the important words. Then we create a One-Hot encoding for the each document using these important words.
+Training model is build on the training data for feature extraction. The same model is used on test data to transform it into features. This above process is done for Word Count Feature Vector and Tf-Idf. Whereas for the
+graph based feature extraction techniques we save the list of important words (Nodes). Then we create a One-Hot encoding for the each document using these important words.
 ### Model Selection
 In each of the experiments five fold cross validation is used. Out of all the 5-fold cross validation we take the model that produced
 highest test accuracy as the best model. The best model is saved and used on the unseen test data to check the performance.
+
 ### Model Testing
-I used the saved models to create features and test the classification algorithms.
+I used the saved models (best model out of 5-fold) to transform the test data into features and to test the classification algorithms.
 
 ## Results
 As there are 4 algorithms and 4 feature extraction techniques, There are 16 experiments in total.
-Among All these experiments only Neural Network with word count based features out performed by reaching 98.84% of testing accuracy.
+Among all these experiments only Neural Network with word count based features out performed by reaching 98.84% of testing accuracy.
 Whereas all other classifiers could able to reach the accuracy with 90-97 % of accuracy.
 
 ## Intresting Observations
-    graph coloring  based technique uses only 154 features and kcore based algorithms 198 featues but
+    Graph coloring  based technique uses only 154 features and kcore based algorithms 198 featues but
     produces close to 95% accuracy. Time requried to build and test the models is much less comparing with
     other feature representaion techniques.
 
