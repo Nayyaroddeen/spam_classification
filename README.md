@@ -51,7 +51,7 @@ Whereas all other classifiers could able to reach the accuracy with 90-97 % of a
 
 ## Intresting Observations
     Graph coloring  based technique uses only 154 features and kcore based algorithms 198 featues but
-    produces close to 95% accuracy. Time requried to build and test the models is much less comparing with
+    produces close to 95% accuracy. Time requried to build and test these models is much less comparing with
     other feature representaion techniques.
 
 # Parameter Tuning
