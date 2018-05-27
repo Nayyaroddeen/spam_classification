@@ -9,7 +9,7 @@ Enron1(http://nlp.cs.aueb.gr/software_and_datasets/Enron-Spam/preprocessed/enron
 While preparing the dataset I've selected  10% of the data as test set randomly and remaining 90% of the for the training and validation sets.
 
 ## Feature Representation Techniques
-I used following techniques to represent the techniques.
+###I used following techniques to represent the techniques.
     1. Word Count Feature Vector
     2. Kcore features
     3. Novel Graph Coloring based feature extraction
@@ -17,7 +17,7 @@ I used following techniques to represent the techniques.
 
 
 ## Classification Algorithms
-I used following classification algorithms
+###I used following classification algorithms
     1. Logistic Regression
     2. Random Forest
     3. Neural Network
