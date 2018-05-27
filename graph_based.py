@@ -40,10 +40,23 @@ def create_graph(file_input_dir, train_validation_set):
                 temp = []
                 temp.append(0)
                 class_list.append(temp)
+    k_core_feature_list=list(nx.k_core(G).nodes())
+    coloring_dict = nx.coloring.greedy_color(G)
+    filename = 'k_core_features.sav'
+    pickle.dump(k_core_feature_list, open('best_models/' + filename, 'wb'))
+
+    print(len(k_core_feature_list))
+    val = []
+    keys = []
+    for key, item in coloring_dict.items():
+        if (item > 20):
+            keys.append(key)
+    filename = 'coloring_features.sav'
+    pickle.dump(keys, open('best_models/' + filename, 'wb'))
 
 
 if __name__ == "__main__":
         class_list = []
         a = []
         train_validation_set = pickle.load(open('train_validation_sets.txt', 'rb'))
-        create_graph('raw_input', train_validation_set)
+        #create_graph('raw_input', train_validation_set)
