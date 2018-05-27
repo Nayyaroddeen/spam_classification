@@ -36,6 +36,15 @@ def test_logist_model_kcore(data,class_list):
     print(accuracy_score(class_list,y_out))
     print(len(data))
 
+def test_random_forest_kcore(data,class_list):
+
+    logist_model=pickle.load(open('best_models/random_forest_best_model_kcore.sav', 'rb'))
+    data=transfrom_kcore(data)
+    y_out=logist_model.predict(data)
+    print(accuracy_score(class_list,y_out))
+    print(len(data))
+
+
 def test_random_forest_model(data,class_list):
 
     logist_model=pickle.load(open('best_models/random_forest_best_model.sav', 'rb'))
@@ -95,4 +104,5 @@ if __name__ == "__main__":
     #test_random_forest_model(count_vec.toarray().astype(int), class_list)
     #test_nn_model(count_vec.toarray().astype(int),class_list)
     #test_cnn_model(count_vec.toarray().astype(int), class_list)
-    test_logist_model_kcore(count_vec,class_list)
+    #test_logist_model_kcore(count_vec,class_list)
+    #test_random_forest_kcore(count_vec,class_list)
