@@ -50,12 +50,12 @@ Among All these experiments only Neural Network with word count based features o
 Whereas all other classifiers could able to reach the accuracy with 90-97 % of accuracy.
 
 ## Intresting Observations
-    graph coloring features based technique uses only 154 and kcore based algorithms but
-    produces close to 95%. Time requried for build and testing is much is much less comparing with
-    other feature representaion techniques. 
+    graph coloring  based technique uses only 154 features and kcore based algorithms 198 featues but
+    produces close to 95%. Time requried to build and test the models is much is much less comparing with
+    other feature representaion techniques.
 
 # Parameter Tuning
-    1. For NN model I tuned the threshold to 0.5 to 0.25 found the best result at 0.25
+    1. For NN model I tuned the threshold from 0.5 to 0.20 found the best result at 0.25
     2. For Random Forest I tried increasing the number of trees as the number of trees increases the accuracy increased.
     3. For CNN tried with different filter sizes and layers but as the data is less I din't go further to explore much.
 
