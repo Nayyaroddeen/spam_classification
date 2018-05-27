@@ -4,14 +4,34 @@ from sklearn.metrics import accuracy_score
 from bulid_models import count_vector_model
 from keras.models import model_from_json
 import numpy as np
+from graph_based import create_vector
 def transfrom_word_cound_model(data):
     count_vec=pickle.load(open('best_models/count_vec_model.sav', 'rb'))
     return count_vec.transform(data)
 
+def transfrom_kcore(data):
+    vec_array=[]
+    word_list = pickle.load(open('best_models/k_core_features.sav', 'rb'))
+
+    for i in range(0, len(data)):
+        temp_list = create_vector(data[i], word_list)
+        vec_array.append(temp_list)
+    vec_array=np.array(vec_array)
+
+    return vec_array
 
 def test_logist_model(data,class_list):
 
     logist_model=pickle.load(open('best_models/logistic_best_model.sav', 'rb'))
+    y_out=logist_model.predict(data)
+    print(accuracy_score(class_list,y_out))
+    print(len(data))
+
+
+def test_logist_model_kcore(data,class_list):
+
+    logist_model=pickle.load(open('best_models/logistic_best_model_kcore.sav', 'rb'))
+    data=transfrom_kcore(data)
     y_out=logist_model.predict(data)
     print(accuracy_score(class_list,y_out))
     print(len(data))
@@ -70,8 +90,9 @@ if __name__ == "__main__":
     a=[]
     test_set_docs=pickle.load(open('test_set.txt', 'rb'))
     count_vec,class_list=preprocess_docs('raw_input',test_set_docs)
-    count_vec=transfrom_word_cound_model(count_vec)
+    #count_vec=transfrom_word_cound_model(count_vec)
     #stest_logist_model(count_vec.toarray().astype(int), class_list)
     #test_random_forest_model(count_vec.toarray().astype(int), class_list)
     #test_nn_model(count_vec.toarray().astype(int),class_list)
-    test_cnn_model(count_vec.toarray().astype(int), class_list)
+    #test_cnn_model(count_vec.toarray().astype(int), class_list)
+    test_logist_model_kcore(count_vec,class_list)
