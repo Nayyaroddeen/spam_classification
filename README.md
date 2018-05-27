@@ -28,4 +28,14 @@ Logistic Regression. It is observed that the test accuracy is close to 97% in ea
 test accuracy so I moved to clasifiers such as Random Forest, Neural Network, Convolution Neural Network. I performed experiments
 with each of these classifiers with different features. In all the experiments I found that Neural Network produced maximum test accuracy of 98%.
 
+## Experimental Setup
+### Feature extraction
+Training model is build on the training data. The same model is used on test to create features. This above process is done for Word Count Feature Vector and Tf-Idf. Whereas for the
+graph based feature extraction techniques we builds lists for the important words. Then we create a One-Hot encoding for the each document.
+### Model Selection
+In each of the experiments five fold cross validation is used. Out of all the 5-fold cross validation we take the model that produced
+highest test accuracy as the best model. The best model is saved and used on the unseen test data to check the performance.
+### Model Testing
+We used the saved models to create features and test the classification algorithms.
 
+## Intresting Observations
