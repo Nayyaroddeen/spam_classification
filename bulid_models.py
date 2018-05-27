@@ -143,6 +143,59 @@ def NN_K_Fold(data,class_list):
         print(accuracy_score(validation_class, predict_out))
 
 
+def CNN_K_Fold(data,class_list):
+    seed = 7
+    kfold = StratifiedKFold(n_splits=5
+                            , shuffle=True, random_state=seed)
+    base_acc = 0
+    input_dim = len(data[1, :])
+    hidden_nodes_len = 1000
+    data = np.expand_dims(data, axis=2)
+    for train, validation in kfold.split(data, class_list):
+        train_data = data[train]
+        train_class = class_list[train]
+
+        validation_data = data[validation]
+        validation_class = class_list[validation]
+
+
+        print(input_dim)
+        print(hidden_nodes_len)
+        model = Sequential()
+        model.add(Convolution1D(nb_filter=1,filter_length=100, padding="same", input_shape=(input_dim, 1)))
+        model.add(Activation('relu'))
+        model.add(MaxPooling1D(pool_size=10, strides=10))
+        model.add(Flatten())
+        model.add(Dense(1, activation='sigmoid'))
+        model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+        model.fit(train_data, train_class, epochs=10, batch_size=50)
+
+        scores = model.evaluate(train_data, train_class)
+        print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1] * 100))
+
+        predict = model.predict(validation_data)
+        predict_out=[]
+        for i in range(0,len(validation_data)):
+            if(predict[i]>0.25):
+                predict_out.append(1)
+            else:
+                predict_out.append(0)
+
+        validation_acc = accuracy_score(validation_class, predict_out)
+        print(validation_acc)
+        if (base_acc < validation_acc):
+            filename = 'cnn_best_model.sav'
+            # serialize model to JSON
+            model_json = model.to_json()
+            with open("best_models/cnn_model.json", "w") as json_file:
+                json_file.write(model_json)
+            # serialize weights to HDF5
+            model.save_weights("best_models/cnn_model.h5")
+            print("Saved model to disk")
+            base_acc=validation_acc
+        print(accuracy_score(validation_class, predict_out))
+
 if __name__ == "__main__":
     class_list=[]
     a=[]
@@ -151,5 +204,6 @@ if __name__ == "__main__":
     count_vec=count_vector_model(count_vec)
     #Logist_Reg_K_Fold(count_vec, np.array(class_list))
     #Random_Forest_K_Fold(count_vec.toarray().astype(int), np.array(class_list))
-    NN_K_Fold(count_vec.toarray().astype(int), np.array(class_list))
+    #NN_K_Fold(count_vec.toarray().astype(int), np.array(class_list))
+    CNN_K_Fold(count_vec.toarray().astype(int), np.array(class_list))
 
