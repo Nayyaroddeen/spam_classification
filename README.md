@@ -1,15 +1,21 @@
 # spam_classification
 This project contains the source files for the classification algorithms such as
 Logistic Regression, Random Forest, Neural Network, Convolution Neural Network for
-spam classification.
+spam classification. Also the best models of 5-fold cross validation are also included.
+
 
 ## Dataset Preparation
-The dataset is downloaded from this(http://nlp.cs.aueb.gr/software_and_datasets/Enron-Spam/index.html) location. In particular
-Enron1(http://nlp.cs.aueb.gr/software_and_datasets/Enron-Spam/preprocessed/enron1.tar.gz) from the Enron-Spam in pre-processed form.
+The dataset is downloaded from this (http://nlp.cs.aueb.gr/software_and_datasets/Enron-Spam/index.html) location. In particular
+Enron1 (http://nlp.cs.aueb.gr/software_and_datasets/Enron-Spam/preprocessed/enron1.tar.gz) from the Enron-Spam in pre-processed form.
 While preparing the dataset I've selected  10% of the data as test set randomly and remaining 90% of the for the training and validation sets.
 
+## Training and Validation file names are included in following file
+    1.train_validation_sets.txt
+## Test file names are included in following file
+    1.test_set.txt
+
 ## Feature Representation Techniques
-### I used following techniques to represent the techniques.
+### I used following techniques to represent features.
     1. Word Count Feature Vector
     2. Kcore features
     3. Novel Graph Coloring based feature extraction
@@ -44,7 +50,15 @@ Among All these experiments only Neural Network with word count based features o
 Whereas all other classifiers could able to reach the accuracy with 90-97 % of accuracy.
 
 ## Intresting Observations
-    Need to write
+    graph coloring features based technique uses only 154 and kcore based algorithms but
+    produces close to 95%. Time requried for build and testing is much is much less comparing with
+    other feature representaion techniques. 
+
+# Parameter Tuning
+    1. For NN model I tuned the threshold to 0.5 to 0.25 found the best result at 0.25
+    2. For Random Forest I tried increasing the number of trees as the number of trees increases the accuracy increased.
+    3. For CNN tried with different filter sizes and layers but as the data is less I din't go further to explore much.
+
 
 # How to Build Models
 
