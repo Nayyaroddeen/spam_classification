@@ -4,6 +4,8 @@ import glob
 import numpy as np
 from bulid_models import Logist_Reg_K_Fold
 from bulid_models import NN_K_Fold
+from bulid_models import Random_Forest_K_Fold
+from bulid_models import CNN_K_Fold
 def create_vector(doc,word_list):
     vec=[]
     for i in range(0,len(word_list)):
@@ -55,8 +57,41 @@ def create_graph(file_input_dir, train_validation_set):
     pickle.dump(keys, open('best_models/' + filename, 'wb'))
 
 
+def build_models_using_core(file_input_dir,train_validation_set):
+    data = []
+    class_list = []
+    G = nx.Graph()
+    for filename in glob.glob(file_input_dir + '/*.txt'):
+        if (filename in train_validation_set):
+            file = open(filename, encoding="utf8", errors='ignore')
+            filelines = file.readlines()
+            str1 = ""
+            for each in filelines:
+                str1 = str1 + each
+            data.append(str1)
+            if (filename.__contains__('ham')):
+                temp = []
+                temp.append(1)
+                class_list.append(temp)
+            else:
+                temp = []
+                temp.append(0)
+                class_list.append(temp)
+    vec_array=[]
+    word_list = pickle.load(open('best_models/k_core_features.sav', 'rb'))
+
+    for i in range(0, len(data)):
+        temp_list = create_vector(data[i], word_list)
+        vec_array.append(temp_list)
+    vec_array=np.array(vec_array)
+    class_list=np.array(class_list)
+    Logist_Reg_K_Fold(vec_array,class_list)
+    Random_Forest_K_Fold(vec_array,class_list)
+    NN_K_Fold(vec_array, class_list)
+    CNN_K_Fold(vec_array, class_list)
 if __name__ == "__main__":
         class_list = []
         a = []
         train_validation_set = pickle.load(open('train_validation_sets.txt', 'rb'))
         #create_graph('raw_input', train_validation_set)
+        build_models_using_core('raw_input', train_validation_set)
