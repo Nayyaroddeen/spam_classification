@@ -36,6 +36,11 @@ graph based feature extraction techniques we builds lists for the important word
 In each of the experiments five fold cross validation is used. Out of all the 5-fold cross validation we take the model that produced
 highest test accuracy as the best model. The best model is saved and used on the unseen test data to check the performance.
 ### Model Testing
-We used the saved models to create features and test the classification algorithms.
+I used the saved models to create features and test the classification algorithms.
+
+## Results
+As there are 4 algorithms and 4 feature extraction techniques, There are 16 experiments in total.
+Among All these experiments only Neural Network with word count based features out performed by reaching 98% of testing accuracy.
+Whereas all other classifiers could able to reach the accuracy with 90-97 % of accuracy.
 
 ## Intresting Observations
