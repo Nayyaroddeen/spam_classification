@@ -1,8 +1,7 @@
 # spam_classification
 This project contains the source files for the classification algorithms such as
 Logistic Regression, Random Forest, Neural Network, Convolution Neural Network for
-spam classification. Also the best models of 5-fold cross validation are also included.
-
+spam classification.
 
 ## Dataset Preparation
 The dataset is downloaded from this (http://nlp.cs.aueb.gr/software_and_datasets/Enron-Spam/index.html) location. In particular
@@ -73,4 +72,6 @@ Please use Anaconda to install the following packages
     2.place the .ham and .spam files from the spam/ and ham/ folders of enron1 into raw_input.
     3.run python bulid_models.py to build models / python graph_based.py for the graph based models
     4.run python test_models.py to test the models
+
+
 
