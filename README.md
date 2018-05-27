@@ -44,9 +44,9 @@ Among All these experiments only Neural Network with word count based features o
 Whereas all other classifiers could able to reach the accuracy with 90-97 % of accuracy.
 
 ## Intresting Observations
+    Need to write
 
-
-#How to Build Models
+# How to Build Models
 
 ## Required Packages
     1.pickle
