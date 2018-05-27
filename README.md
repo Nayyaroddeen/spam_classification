@@ -54,10 +54,8 @@ Whereas all other classifiers could able to reach the accuracy with 90-97 % of a
     3.keras
     4.networkx
 ## Run the following command
-    mkdir raw_input
-## place the .ham and .spam files from the spam/ and ham/ folders of enron1.
-
-## run python bulid_models.py to build models / python graph_based.py for the graph based models
-
-## run python test_models.py to test the models
+    1.mkdir raw_input
+    2.place the .ham and .spam files from the spam/ and ham/ folders of enron1.
+    3.run python bulid_models.py to build models / python graph_based.py for the graph based models
+    4.run python test_models.py to test the models
 
