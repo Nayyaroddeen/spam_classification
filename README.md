@@ -30,8 +30,8 @@ While preparing the dataset I've selected  10% of the data as test set randomly 
     4. Convolution Neural Network
 
 As the spam classification problem is a binary classification problem, I started with
-Logistic Regression. It is observed that the test accuracy is close to 97% in each fold. Then I wanted to improve the
-test accuracy so I moved to clasifiers such as Random Forest, Neural Network, Convolution Neural Network. I performed experiments
+Logistic Regression. It is observed that the validation accuracy is close to 97% in each fold and test accuracy is also around 96-97 %. Then I wanted to improve the
+test accuracy so I moved to classifiers such as Random Forest, Neural Network, and Convolution Neural Network. I performed experiments
 with each of these classifiers with different features. In all the experiments I found that Neural Network produced maximum test accuracy of 98.84%.
 
 ## Experimental Setup
