@@ -98,10 +98,10 @@ def build_models_using_core(file_input_dir,train_validation_set):
         vec_array.append(temp_list)
     vec_array=np.array(vec_array)
     class_list=np.array(class_list)
-    Logist_Reg_K_Fold(vec_array,class_list)
-    Random_Forest_K_Fold(vec_array,class_list)
-    NN_K_Fold(vec_array, class_list)
-    CNN_K_Fold(vec_array, class_list)
+    Logist_Reg_K_Fold(vec_array,class_list,"kcore")
+    Random_Forest_K_Fold(vec_array,class_list,"kcore")
+    NN_K_Fold(vec_array, class_list,"kcore")
+    CNN_K_Fold(vec_array, class_list,"kcore")
 
 
 ''' building the models using the coloring features once the input is scanned then
@@ -136,10 +136,10 @@ def build_models_using_coloring(file_input_dir,train_validation_set):
         vec_array.append(temp_list)
     vec_array=np.array(vec_array)
     class_list=np.array(class_list)
-    Logist_Reg_K_Fold(vec_array,class_list)
-    Random_Forest_K_Fold(vec_array,class_list)
-    NN_K_Fold(vec_array, class_list)
-    CNN_K_Fold(vec_array, class_list)
+    Logist_Reg_K_Fold(vec_array,class_list,"coloring")
+    Random_Forest_K_Fold(vec_array,class_list,"coloring")
+    NN_K_Fold(vec_array, class_list,"coloring")
+    CNN_K_Fold(vec_array, class_list,"coloring")
 if __name__ == "__main__":
         class_list = []
         a = []
