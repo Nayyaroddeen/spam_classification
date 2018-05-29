@@ -146,8 +146,8 @@ if __name__ == "__main__":
         #loading the training file names
         train_validation_set = pickle.load(open('train_validation_sets.txt', 'rb'))
         '''this function is used to create the graph based features'''
-        #create_graph('raw_input', train_validation_set)
+        create_graph('raw_input', train_validation_set)
         ''' this functions builds all the models using core features'''
-        #build_models_using_core('raw_input', train_validation_set)
+        build_models_using_core('raw_input', train_validation_set)
         ''' this functions builds all the models using coloring features'''
-        #build_models_using_coloring('raw_input', train_validation_set)
+        build_models_using_coloring('raw_input', train_validation_set)
