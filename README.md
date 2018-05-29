@@ -47,12 +47,12 @@ I used the saved models (best model out of 5-fold) to transform the test data in
 ## Results
 As there are 4 algorithms and 4 feature extraction techniques, There are 16 experiments in total.
 Among all these experiments only Neural Network with word count based features out performed by reaching 98.84% of testing accuracy.
-Whereas all other classifiers could able to reach the accuracy with 90-97 % of accuracy.
+Whereas all other classifiers could able to reach the accuracy with 90-97 % of accuracy. Tf-idf produced worst results (This part needs more tuning) among all the features representation techniques.
 
 ## Intresting Observations
     Graph coloring  based technique uses only 154 features and kcore based algorithms 198 featues but
     produces close to 95% accuracy. Time requried to build and test these models is much less comparing with
-    other feature representaion techniques.
+    other feature representaion techniques. Whereas wordcount and tfidf contains featues of length 40K+ features.
 
 # Parameter Tuning
     1. For NN model I tuned the threshold from 0.5 to 0.20 found the best result at 0.25
@@ -68,10 +68,21 @@ Please use Anaconda to install the following packages
     3.keras
     4.networkx
 ## Steps
-    1.mkdir raw_input
-    2.place the .ham and .spam files from the spam/ and ham/ folders of enron1 into raw_input.
-    3.run python bulid_models.py to build models / python graph_based.py for the graph based models
+    1.Once you clone the repo. run mkdir raw_input in spam_classification/ folder
+    2.place the .ham.txt and .spam.txt files from the spam/ and ham/ folders of enron1 into raw_input.
+    3.run python bulid_models.py to build models (This will build Neural Network Model) / python graph_based.py for the graph based models
     4.run python test_models.py to test the models
 
+    Also note that code is commented for the rest of the experiments. As Neural network with word count features performed better
+    I've consiered it as a final algorithm. If you want to run some more additional experiments please un-comment respective the the classifier
+    function to train and test the models.
 
+## repo structure
+    1) raw_input/ : This folder should contain .spam.txt and .ham.txt files
+    2) best_models/: This folder is a destination folder for the models built in the 5-fold cross validation
+    3) bulid_models.py : This file contains code for building the models
+    4) graph_based.py : This file contains the code for building the models using the graph based features.
+    5) test_models.py: This file contains the code for testing the models
+    6) preprocess.py: This file splits the input file list to train, validation and test sets randomly.
+    7) test_set.txt/train_validation_sets.txt: These are the outputs of the preprocess.py file.
 
