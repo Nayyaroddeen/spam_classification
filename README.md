@@ -70,8 +70,8 @@ Please use Anaconda to install the following packages
 ## Steps
     1.Once you clone the repo. run mkdir raw_input in spam_classification/ folder
     2.place the .ham.txt and .spam.txt files from the spam/ and ham/ folders of enron1 into raw_input.
-    3.run python bulid_models.py to build models (This will build Neural Network Model) / python graph_based.py for the graph based models
-    4.run python test_models.py to test the models
+    3.run python bulid_models.py to build model (This will build Neural Network Model) / python graph_based.py for the graph based model
+    4.run python test_models.py to test the model
 
     Also note that code is commented for the rest of the experiments. As Neural network with word count features performed better
     I've considered it as a final algorithm. If you want to run some more additional experiments please un-comment respective the the classifier
