@@ -44,19 +44,19 @@ def transfrom_coloring(data):
 for the testing data using word count feature vectors'''
 def test_logist_model(data,class_list):
 
-    logist_model=pickle.load(open('best_models/logistic_best_model.sav', 'rb'))
+    logist_model=pickle.load(open('best_models/logistic_best_model_word_count.sav', 'rb'))
     y_out=logist_model.predict(data)
-    print(accuracy_score(class_list,y_out))
-    print(len(data))
+    print("logistic_word_count accuracy:",accuracy_score(class_list,y_out))
+
 
 ''' This functions loads the pre trained model and test and prints the accuracy for each 
 for the testing data using tfidf'''
 def test_logist_model_tfidf(data,class_list):
 
-    logist_model=pickle.load(open('best_models/logistic_best_model_tfidf.sav', 'rb'))
+    logist_model=pickle.load(open('best_models/logistic_best_model_tf_idf.sav', 'rb'))
     y_out=logist_model.predict(data)
-    print(accuracy_score(class_list,y_out))
-    print(len(data))
+    print("logistic_tfidf accuracy:",accuracy_score(class_list,y_out))
+
 
 ''' This functions loads the pre trained model and test and prints the accuracy for each 
 for the testing data using kcore features'''
@@ -65,8 +65,7 @@ def test_logist_model_kcore(data,class_list):
     logist_model=pickle.load(open('best_models/logistic_best_model_kcore.sav', 'rb'))
     data=transfrom_kcore(data)
     y_out=logist_model.predict(data)
-    print(accuracy_score(class_list,y_out))
-    print(len(data))
+    print("logistic_kcore accuracy:",accuracy_score(class_list,y_out))
 
 
 ''' This functions loads the pre trained model and test and prints the accuracy for each 
@@ -76,8 +75,8 @@ def test_logist_model_coloring(data,class_list):
     logist_model=pickle.load(open('best_models/logistic_best_model_coloring.sav', 'rb'))
     data=transfrom_coloring(data)
     y_out=logist_model.predict(data)
-    print(accuracy_score(class_list,y_out))
-    print(len(data))
+    print("logistic_coloring accuracy:",accuracy_score(class_list,y_out))
+
 
 
 ''' This functions loads the pre trained model of random forest and test and prints the accuracy for each 
@@ -87,8 +86,8 @@ def test_random_forest_kcore(data,class_list):
     logist_model=pickle.load(open('best_models/random_forest_best_model_kcore.sav', 'rb'))
     data=transfrom_kcore(data)
     y_out=logist_model.predict(data)
-    print(accuracy_score(class_list,y_out))
-    print(len(data))
+    print("random_forest_kcore accuracy:",accuracy_score(class_list,y_out))
+
 
 
 ''' This functions loads the pre trained model of random forest and test and prints the accuracy for each 
@@ -99,8 +98,8 @@ def test_random_forest_coloring(data,class_list):
     logist_model=pickle.load(open('best_models/random_forest_best_model_coloring.sav', 'rb'))
     data=transfrom_coloring(data)
     y_out=logist_model.predict(data)
-    print(accuracy_score(class_list,y_out))
-    print(len(data))
+    print("random_forest_coloring accuracy:",accuracy_score(class_list,y_out))
+
 
 
 ''' This functions loads the pre trained model of random forest and test and prints the accuracy for each 
@@ -108,10 +107,9 @@ for the testing data using word count features'''
 
 def test_random_forest_model(data,class_list):
 
-    logist_model=pickle.load(open('best_models/random_forest_best_model.sav', 'rb'))
+    logist_model=pickle.load(open('best_models/random_forest_best_model_word_count.sav', 'rb'))
     y_out=logist_model.predict(data)
-    print(accuracy_score(class_list,y_out))
-    print(len(data))
+    print("random_forest_wordcount accuracy:",accuracy_score(class_list,y_out))
 
 
 ''' This functions loads the pre trained model of random forest and test and prints the accuracy for each 
@@ -119,21 +117,21 @@ for the testing data using tfidf'''
 
 def test_random_forest_tfidf(data,class_list):
 
-    logist_model=pickle.load(open('best_models/random_forest_best_model_tfidf.sav', 'rb'))
+    logist_model=pickle.load(open('best_models/random_forest_best_model_tf_idf.sav', 'rb'))
     y_out=logist_model.predict(data)
-    print(accuracy_score(class_list,y_out))
-    print(len(data))
+    print("random_forest_tfidf accuracy:",accuracy_score(class_list,y_out))
+
 ''' This functions loads the pre trained model of nerual network and test and prints the accuracy for each 
 for the testing data using word count vector'''
 
 def test_nn_model(data,class_list):
     #loading the pretrained model
-    json_file = open('best_models/nn_model.json', 'r')
+    json_file = open('best_models/nn_model_word_count.json', 'r')
     loaded_model_json = json_file.read()
     json_file.close()
     loaded_model = model_from_json(loaded_model_json)
     # load weights into new model
-    loaded_model.load_weights("best_models/nn_model.h5")
+    loaded_model.load_weights("best_models/nn_model_word_count.h5")
     print("Loaded model from disk")
     loaded_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     #predicting for the test data
@@ -155,12 +153,12 @@ def test_nn_model(data,class_list):
 for the testing data using tfidf'''
 def test_nn_model_tfidf(data,class_list):
 
-    json_file = open('best_models/nn_model_tfidf.json', 'r')
+    json_file = open('best_models/nn_model_tf_idf.json', 'r')
     loaded_model_json = json_file.read()
     json_file.close()
     loaded_model = model_from_json(loaded_model_json)
     # load weights into new model
-    loaded_model.load_weights("best_models/nn_model_tfidf.h5")
+    loaded_model.load_weights("best_models/nn_model_tf_idf.h5")
     print("Loaded model from disk")
     loaded_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     predict = loaded_model.predict(data)
@@ -172,7 +170,7 @@ def test_nn_model_tfidf(data,class_list):
             predict_out.append(0)
 
     validation_acc = accuracy_score(class_list, predict_out)
-    print(validation_acc)
+    print("Test Accuracy of nn_model_tfidf:", validation_acc)
 
 
 ''' This functions loads the pre trained model of nerual network and test and prints the accuracy for each 
@@ -199,7 +197,7 @@ def test_nn_model_kcore(data,class_list):
             predict_out.append(0)
 
     validation_acc = accuracy_score(class_list, predict_out)
-    print(validation_acc)
+    print("Test Accuracy of nn_model_kcore:", validation_acc)
 
 ''' This functions loads the pre trained model of nerual network and test and prints the accuracy for each 
 for the testing data using coloring based features'''
@@ -226,19 +224,19 @@ def test_nn_model_coloring(data,class_list):
             predict_out.append(0)
 
     validation_acc = accuracy_score(class_list, predict_out)
-    print(validation_acc)
+    print("Test Accuracy of nn_model_coloring:", validation_acc)
 
 
 ''' This functions loads the pre trained model of convolutional nerual network and test and prints the accuracy for each 
 for the testing data using word count based features'''
 def test_cnn_model(data,class_list):
     data = np.expand_dims(data, axis=2)
-    json_file = open('best_models/cnn_model.json', 'r')
+    json_file = open('best_models/cnn_model_word_count.json', 'r')
     loaded_model_json = json_file.read()
     json_file.close()
     loaded_model = model_from_json(loaded_model_json)
     # load weights into new model
-    loaded_model.load_weights("best_models/cnn_model.h5")
+    loaded_model.load_weights("best_models/cnn_model_word_count.h5")
     print("Loaded model from disk")
     loaded_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     predict = loaded_model.predict(data)
@@ -252,7 +250,7 @@ def test_cnn_model(data,class_list):
             predict_out.append(0)
 
     validation_acc = accuracy_score(class_list, predict_out)
-    print(validation_acc)
+    print("Test Accuracy of cnn_model_word_count:", validation_acc)
 
 
 ''' This functions loads the pre trained model of convolutional nerual network and test and prints the accuracy for each 
@@ -261,12 +259,12 @@ for the testing data using kcore'''
 def test_cnn_model_kcore(data,class_list):
     data=transfrom_kcore(data)
     data = np.expand_dims(data, axis=2)
-    json_file = open('best_models/cnn_model_core.json', 'r')
+    json_file = open('best_models/cnn_model_kcore.json', 'r')
     loaded_model_json = json_file.read()
     json_file.close()
     loaded_model = model_from_json(loaded_model_json)
     # load weights into new model
-    loaded_model.load_weights("best_models/cnn_model_core.h5")
+    loaded_model.load_weights("best_models/cnn_model_kcore.h5")
     print("Loaded model from disk")
     loaded_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     predict = loaded_model.predict(data)
@@ -280,7 +278,7 @@ def test_cnn_model_kcore(data,class_list):
             predict_out.append(0)
 
     validation_acc = accuracy_score(class_list, predict_out)
-    print(validation_acc)
+    print("Test Accuracy of cnn_model_kcore:", validation_acc)
 
 
 ''' This functions loads the pre trained model of convolutional nerual network and test and prints the accuracy for each 
@@ -308,7 +306,7 @@ def test_cnn_model_coloring(data,class_list):
             predict_out.append(0)
 
     validation_acc = accuracy_score(class_list, predict_out)
-    print(validation_acc)
+    print("Test Accuracy of cnn_model_coloring:", validation_acc)
 
 
 ''' This functions loads the pre trained model of convolutional nerual network and test and prints the accuracy for each 
@@ -316,12 +314,12 @@ for the testing data using tfidf'''
 def test_cnn_model_tfidf(data,class_list):
 
     data = np.expand_dims(data, axis=2)
-    json_file = open('best_models/cnn_model_tfidf.json', 'r')
+    json_file = open('best_models/cnn_model_tf_idf.json', 'r')
     loaded_model_json = json_file.read()
     json_file.close()
     loaded_model = model_from_json(loaded_model_json)
     # load weights into new model
-    loaded_model.load_weights("best_models/cnn_model_tfidf.h5")
+    loaded_model.load_weights("best_models/cnn_model_tf_idf.h5")
     print("Loaded model from disk")
     loaded_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     predict = loaded_model.predict(data)
@@ -335,37 +333,41 @@ def test_cnn_model_tfidf(data,class_list):
             predict_out.append(0)
 
     validation_acc = accuracy_score(class_list, predict_out)
-    print(validation_acc)
+    print("Test Accuracy of cnn_model_tfidf:",validation_acc)
 
 if __name__ == "__main__":
     class_list=[]
     a=[]
     test_set_docs=pickle.load(open('test_set.txt', 'rb'))
-    count_vec,class_list=preprocess_docs('raw_input',test_set_docs)
+    docs,class_list=preprocess_docs('raw_input',test_set_docs)
     ''' Algorithms based on word count feature vectors and NN
     performs better than other models'''
-    count_vec=transfrom_word_cound_model(count_vec)
-    #test_logist_model(count_vec.toarray().astype(int), class_list)
-    #test_random_forest_model(count_vec.toarray().astype(int), class_list)
+    print("\n\n word count based algorithms \n\n")
+    count_vec=transfrom_word_cound_model(docs)
+    # test_logist_model(count_vec.toarray().astype(int), class_list)
+    # test_random_forest_model(count_vec.toarray().astype(int), class_list)
     test_nn_model(count_vec.toarray().astype(int),class_list)
-    #test_cnn_model(count_vec.toarray().astype(int), class_list)
+    # test_cnn_model(count_vec.toarray().astype(int), class_list)
     ''' Algorithms based on kcore features '''
+    #print("\n\n core  based algorithms \n\n")
 
-    #test_logist_model_kcore(count_vec,class_list)
-    #test_random_forest_kcore(count_vec,class_list)
-    #test_nn_model_kcore(count_vec,class_list)
-    #test_cnn_model_kcore(count_vec,class_list)
+    # test_logist_model_kcore(docs,class_list)
+    # test_random_forest_kcore(docs,class_list)
+    # test_nn_model_kcore(docs,class_list)
+    # test_cnn_model_kcore(docs,class_list)
     ''' Algorithms based on graph coloring features'''
+    #print("\n\n coloring  based algorithms \n\n")
 
-    #test_logist_model_coloring(count_vec,class_list)
-    #test_random_forest_coloring(count_vec,class_list)
-    #test_nn_model_coloring(count_vec,class_list)
-    #test_cnn_model_coloring(count_vec,class_list)
+    # test_logist_model_coloring(docs,class_list)
+    # test_random_forest_coloring(docs,class_list)
+    # test_nn_model_coloring(docs,class_list)
+    # test_cnn_model_coloring(docs,class_list)
     ''' Algorithms based on tfidf '''
+    #print("\n\n tfidf  based algorithms \n\n")
 
     ## Tf-dff transformation
-    #tfidf=transfrom_word_tfidf(count_vec)
-    #test_logist_model_tfidf(tfidf.toarray().astype(int),class_list)
-    #test_random_forest_tfidf(tfidf.toarray().astype(int),class_list)
-    #test_nn_model_tfidf(tfidf.toarray().astype(int),class_list)
-    #test_cnn_model_tfidf(tfidf.toarray().astype(int),class_list)
+    # tfidf=transfrom_word_tfidf(docs)
+    # test_logist_model_tfidf(tfidf.toarray().astype(int),class_list)
+    # test_random_forest_tfidf(tfidf.toarray().astype(int),class_list)
+    # test_nn_model_tfidf(tfidf.toarray().astype(int),class_list)
+    # test_cnn_model_tfidf(tfidf.toarray().astype(int),class_list)
