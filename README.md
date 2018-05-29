@@ -74,7 +74,7 @@ Please use Anaconda to install the following packages
     4.run python test_models.py to test the models
 
     Also note that code is commented for the rest of the experiments. As Neural network with word count features performed better
-    I've consiered it as a final algorithm. If you want to run some more additional experiments please un-comment respective the the classifier
+    I've considered it as a final algorithm. If you want to run some more additional experiments please un-comment respective the the classifier
     function to train and test the models.
 
 ## repo structure
@@ -83,6 +83,6 @@ Please use Anaconda to install the following packages
     3) bulid_models.py : This file contains code for building the models
     4) graph_based.py : This file contains the code for building the models using the graph based features.
     5) test_models.py: This file contains the code for testing the models
-    6) preprocess.py: This file splits the input file list to train, validation and test sets randomly.
+    6) pre-process.py: This file splits the input file list to train, validation and test sets randomly.
     7) test_set.txt/train_validation_sets.txt: These are the outputs of the preprocess.py file.
 
