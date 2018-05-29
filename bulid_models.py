@@ -57,7 +57,7 @@ validation and saves the best model of these five folds. '''
 def Logist_Reg_K_Fold(data,class_list,model_name=""):
     seed = 7
     #intializing the five fold
-    kfold = StratifiedKFold(n_splits=2
+    kfold = StratifiedKFold(n_splits=5
                             , shuffle=True, random_state=seed)
     base_acc=0
     #starting of the 5-fold cross validation
@@ -88,7 +88,7 @@ validation and saves the best model of these five folds. '''
 def Random_Forest_K_Fold(data,class_list,model_name=""):
     seed = 7
     # intializing the five fold
-    kfold = StratifiedKFold(n_splits=2
+    kfold = StratifiedKFold(n_splits=5
                             , shuffle=True, random_state=seed)
     base_acc = 0
     #starting of the 5-fold cross validation
@@ -116,7 +116,7 @@ validation and saves the best model of these five folds. '''
 def NN_K_Fold(data,class_list,model_name=""):
     seed = 7
     # intializing the five fold
-    kfold = StratifiedKFold(n_splits=2
+    kfold = StratifiedKFold(n_splits=5
                             , shuffle=True, random_state=seed)
     base_acc = 0
     #starting of the 5-fold cross validation
@@ -174,7 +174,7 @@ validation and saves the best model of these five folds. '''
 def CNN_K_Fold(data,class_list,model_name=""):
     seed = 7
     # intializing the five fold
-    kfold = StratifiedKFold(n_splits=2
+    kfold = StratifiedKFold(n_splits=5
                             , shuffle=True, random_state=seed)
     base_acc = 0
     input_dim = len(data[1, :])
