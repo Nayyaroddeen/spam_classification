@@ -11,6 +11,7 @@ from sklearn.ensemble import RandomForestClassifier
 from keras.layers import Dense, Activation, Flatten, Convolution1D, Dropout, MaxPooling1D
 from keras.models import Sequential
 
+
 '''builds a word count model for the input data'''
 def count_vector_model(list_of_docs):
     count_vect = CountVectorizer()
@@ -53,10 +54,10 @@ def preprocess_docs(file_input_dir,train_validation_set):
 
 '''This function builds a logistic regression model using 5 fold cross 
 validation and saves the best model of these five folds. '''
-def Logist_Reg_K_Fold(data,class_list):
+def Logist_Reg_K_Fold(data,class_list,model_name=""):
     seed = 7
     #intializing the five fold
-    kfold = StratifiedKFold(n_splits=5
+    kfold = StratifiedKFold(n_splits=2
                             , shuffle=True, random_state=seed)
     base_acc=0
     #starting of the 5-fold cross validation
@@ -76,7 +77,7 @@ def Logist_Reg_K_Fold(data,class_list):
 
         validation_acc=accuracy_score(validation_class, x_test)
         if(base_acc<validation_acc):
-            filename = 'logistic_best_model.sav'
+            filename = 'logistic_best_model'+"_"+model_name+'.sav'
             pickle.dump(logisticRegr, open('best_models/' + filename, 'wb'))
             base_acc=validation_acc
         print(accuracy_score(validation_class, x_test))
@@ -84,10 +85,10 @@ def Logist_Reg_K_Fold(data,class_list):
 '''This function builds a random forest  model using 5 fold cross 
 validation and saves the best model of these five folds. '''
 
-def Random_Forest_K_Fold(data,class_list):
+def Random_Forest_K_Fold(data,class_list,model_name=""):
     seed = 7
     # intializing the five fold
-    kfold = StratifiedKFold(n_splits=5
+    kfold = StratifiedKFold(n_splits=2
                             , shuffle=True, random_state=seed)
     base_acc = 0
     #starting of the 5-fold cross validation
@@ -103,7 +104,7 @@ def Random_Forest_K_Fold(data,class_list):
         x_test = clf.predict(validation_data)
         validation_acc = accuracy_score(validation_class, x_test)
         if (base_acc < validation_acc):
-            filename = 'random_forest_best_model.sav'
+            filename = 'random_forest_best_model'+"_"+model_name+'.sav'
             pickle.dump(clf, open('best_models/' + filename, 'wb'))
             base_acc=validation_acc
         print(accuracy_score(validation_class, x_test))
@@ -112,10 +113,10 @@ def Random_Forest_K_Fold(data,class_list):
 '''This function builds a nerual network  model using 5 fold cross 
 validation and saves the best model of these five folds. '''
 
-def NN_K_Fold(data,class_list):
+def NN_K_Fold(data,class_list,model_name=""):
     seed = 7
     # intializing the five fold
-    kfold = StratifiedKFold(n_splits=5
+    kfold = StratifiedKFold(n_splits=2
                             , shuffle=True, random_state=seed)
     base_acc = 0
     #starting of the 5-fold cross validation
@@ -158,10 +159,10 @@ def NN_K_Fold(data,class_list):
             filename = 'nn_best_model.sav'
             # serialize model to JSON
             model_json = model.to_json()
-            with open("best_models/nn_model.json", "w") as json_file:
+            with open("best_models/nn_model"+"_"+model_name+".json", "w") as json_file:
                 json_file.write(model_json)
             # serialize weights to HDF5
-            model.save_weights("best_models/nn_model.h5")
+            model.save_weights("best_models/nn_model"+"_"+model_name+".h5")
             print("Saved model to disk")
             base_acc=validation_acc
         print(accuracy_score(validation_class, predict_out))
@@ -170,10 +171,10 @@ def NN_K_Fold(data,class_list):
 '''This function builds a convolutional neural network  model using 5 fold cross 
 validation and saves the best model of these five folds. '''
 
-def CNN_K_Fold(data,class_list):
+def CNN_K_Fold(data,class_list,model_name=""):
     seed = 7
     # intializing the five fold
-    kfold = StratifiedKFold(n_splits=5
+    kfold = StratifiedKFold(n_splits=2
                             , shuffle=True, random_state=seed)
     base_acc = 0
     input_dim = len(data[1, :])
@@ -218,10 +219,10 @@ def CNN_K_Fold(data,class_list):
             filename = 'cnn_best_model.sav'
             # serialize model to JSON
             model_json = model.to_json()
-            with open("best_models/cnn_model.json", "w") as json_file:
+            with open("best_models/cnn_model"+"_"+model_name+".json", "w") as json_file:
                 json_file.write(model_json)
             # serialize weights to HDF5
-            model.save_weights("best_models/cnn_model.h5")
+            model.save_weights("best_models/cnn_model"+"_"+model_name+".h5")
             print("Saved model to disk")
             base_acc=validation_acc
         print(accuracy_score(validation_class, predict_out))
@@ -230,11 +231,16 @@ if __name__ == "__main__":
     class_list=[]
     a=[]
     train_validation_set=pickle.load(open('train_validation_sets.txt', 'rb'))
-    count_vec,class_list=preprocess_docs('raw_input',train_validation_set)
-    count_vec=count_vector_model(count_vec)
+    docs,class_list=preprocess_docs('raw_input',train_validation_set)
+    count_vec=count_vector_model(docs)
     #count_vec=tf_idf_model(count_vec)
-    #Logist_Reg_K_Fold(count_vec, np.array(class_list))
-    #Random_Forest_K_Fold(count_vec.toarray().astype(int), np.array(class_list))
-    NN_K_Fold(count_vec.toarray().astype(int), np.array(class_list))
-    #CNN_K_Fold(count_vec.toarray().astype(int), np.array(class_list))
+    #Logist_Reg_K_Fold(count_vec, np.array(class_list),"word_count")
+    #Random_Forest_K_Fold(count_vec.toarray().astype(int), np.array(class_list),"word_count")
+    NN_K_Fold(count_vec.toarray().astype(int), np.array(class_list),"word_count")
+    #CNN_K_Fold(count_vec.toarray().astype(int), np.array(class_list),"word_count")
 
+    # tfidf=tf_idf_model(docs)
+    # Logist_Reg_K_Fold(tfidf, np.array(class_list),"tf_idf")
+    # Random_Forest_K_Fold(tfidf.toarray().astype(int), np.array(class_list),"tf_idf")
+    # NN_K_Fold(tfidf.toarray().astype(int), np.array(class_list),"tf_idf")
+    # CNN_K_Fold(tfidf.toarray().astype(int), np.array(class_list),"tf_idf")
